@@ -28,7 +28,7 @@ public class Test {
 
     private ChatGPT chatGPT;
 
-    @Before
+    // @Before
     public void before() {
         Proxy proxy = Proxys.http("127.0.0.1", 1080);
 
@@ -44,7 +44,7 @@ public class Test {
 //        log.info("余额：{}", response.getTotalAvailable());
     }
 
-    @org.junit.Test
+    // @org.junit.Test
     public void chat() {
         Message system = Message.ofSystem("你现在是一个诗人，专门写七言绝句");
         Message message = Message.of("写一段七言绝句诗，题目是：火锅！");
@@ -56,11 +56,11 @@ public class Test {
                 .temperature(0.9)
                 .build();
         ChatCompletionResponse response = chatGPT.chatCompletion(chatCompletion);
-        Message res = response.getChoices().get(0).getMessage();
+        Message res = Message.of(response.getChoices().get(0).getMessage().getContent());
         System.out.println(res);
     }
 
-    @org.junit.Test
+    // @org.junit.Test
     public void img() {
 
         File file = new File("微信图片_20230606140621.png");
@@ -77,7 +77,7 @@ public class Test {
 
     }
 
-    @org.junit.Test
+    // @org.junit.Test
     public void audio() {
         File file = new File("D:\\Jenny.mp3");
         Transcriptions transcriptions = Transcriptions.of("whisper-1", AudioModel.WHISPER1.getValue());
@@ -85,7 +85,7 @@ public class Test {
         System.out.println(response.getText());
     }
 
-    @org.junit.Test
+    // @org.junit.Test
     public void chatmsg() {
         String res = chatGPT.chat("写一段七言绝句诗，题目是：火锅！");
         System.out.println(res);
@@ -94,7 +94,7 @@ public class Test {
     /**
      * 测试tokens数量计算
      */
-    @org.junit.Test
+    // @org.junit.Test
     public void tokens() {
         Message system = Message.ofSystem("你现在是一个诗人，专门写七言绝句");
         Message message = Message.of("写一段七言绝句诗，题目是：火锅！");

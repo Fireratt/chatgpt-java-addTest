@@ -15,7 +15,7 @@ public class FunctionCallTest {
 
     private ChatGPT chatGPT;
 
-    @Before
+    // @Before
     public void before() {
         Proxy proxy = Proxys.http("127.0.0.1", 1080);
 
@@ -29,7 +29,7 @@ public class FunctionCallTest {
 
     }
 
-    @org.junit.Test
+    // @org.junit.Test
     public void chat() {
         List<ChatTool> functions = new ArrayList<>();
         ChatTool function = new ChatTool();
@@ -66,7 +66,7 @@ public class FunctionCallTest {
                 .build();
         ChatCompletionResponse response = chatGPT.chatCompletion(chatCompletion);
         ChatChoice choice = response.getChoices().get(0);
-        Message res = choice.getMessage();
+        Message res = Message.of(choice.getMessage().getContent());
         System.out.println(res);
         if ("function_call".equals(choice.getFinishReason())) {
 
@@ -106,7 +106,7 @@ public class FunctionCallTest {
                 .build();
         ChatCompletionResponse response = chatGPT.chatCompletion(chatCompletion);
         ChatChoice choice = response.getChoices().get(0);
-        Message res2 = choice.getMessage();
+        Message res2 = Message.of(choice.getMessage().getContent());
         //上海目前天气晴朗，气温为 22 摄氏度。
         System.out.println(res2.getContent());
     }

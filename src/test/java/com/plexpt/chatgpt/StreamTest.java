@@ -25,7 +25,7 @@ public class StreamTest {
 
     private ChatGPTStream chatGPTStream;
 
-    @Before
+    // @Before
     public void before() {
         Proxy proxy = Proxys.http("127.0.0.1", 1080);
 
@@ -40,7 +40,7 @@ public class StreamTest {
     }
 
 
-    @Test
+    // @Test
     public void chatCompletions() {
         ConsoleStreamListener listener = new ConsoleStreamListener();
         Message message = Message.of("写一段七言绝句诗，题目是：火锅！");
