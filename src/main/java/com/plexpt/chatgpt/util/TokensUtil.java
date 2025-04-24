@@ -88,7 +88,7 @@ public class TokensUtil {
         int sum = 0;
         for (final Message message : messages) {
             sum += tokensPerMessage;
-            sum += encodingUsed.countTokens(message.getContent().toString());
+            sum += encodingUsed.countTokens((String) message.getContent());
             sum += encodingUsed.countTokens(message.getRole());
             if (!StringUtils.isEmpty(message.getName())) {
                 sum += encodingUsed.countTokens(message.getName());
