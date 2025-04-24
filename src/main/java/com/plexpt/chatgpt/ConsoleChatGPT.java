@@ -125,16 +125,16 @@ public class ConsoleChatGPT {
 
     }
 
-    private static BigDecimal getBalance(String key) {
+    // private static BigDecimal getBalance(String key) {
 
-        ChatGPT chatGPT = ChatGPT.builder()
-                .apiKey(key)
-                .proxy(proxy)
-                .build()
-                .init();
+    //     ChatGPT chatGPT = ChatGPT.builder()
+    //             .apiKey(key)
+    //             .proxy(proxy)
+    //             .build()
+    //             .init();
 
-        return chatGPT.balance();
-    }
+    //     return chatGPT.balance();
+    // }
 
     private static void check(String key) {
         if (key == null || key.isEmpty()) {
@@ -157,6 +157,5 @@ public class ConsoleChatGPT {
         }
         return lines.stream().collect(Collectors.joining("\n"));
     }
-
 }
 
