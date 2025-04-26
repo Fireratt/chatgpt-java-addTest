@@ -152,6 +152,7 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <!-- 下面这个标签里的不能改 -->

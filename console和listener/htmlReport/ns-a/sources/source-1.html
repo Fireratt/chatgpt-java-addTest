@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ChatContextHolder</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.util</a>
+</div>
+
+<h1>Coverage Summary for Class: ChatContextHolder (com.plexpt.chatgpt.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChatContextHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.util;
+&nbsp;
+&nbsp;import com.plexpt.chatgpt.entity.chat.Message;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+<b class="nc">&nbsp;public class ChatContextHolder {</b>
+&nbsp;
+<b class="nc">&nbsp;    private static Map&lt;String, List&lt;Message&gt;&gt; context = new HashMap&lt;&gt;();</b>
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 获取对话历史
+&nbsp;     *
+&nbsp;     * @param id
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public static List&lt;Message&gt; get(String id) {
+<b class="nc">&nbsp;        List&lt;Message&gt; messages = context.get(id);</b>
+<b class="nc">&nbsp;        if (messages == null) {</b>
+<b class="nc">&nbsp;            messages = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            context.put(id, messages);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return messages;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 添加对话
+&nbsp;     *
+&nbsp;     * @param id
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public static void add(String id, String msg) {
+&nbsp;
+<b class="nc">&nbsp;        Message message = Message.builder().content(msg).build();</b>
+<b class="nc">&nbsp;        add(id, message);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 添加对话
+&nbsp;     *
+&nbsp;     * @param id
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public static void add(String id, Message message) {
+<b class="nc">&nbsp;        List&lt;Message&gt; messages = context.get(id);</b>
+<b class="nc">&nbsp;        if (messages == null) {</b>
+<b class="nc">&nbsp;            messages = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;            context.put(id, messages);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        messages.add(message);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 清除对话
+&nbsp;     * @param id
+&nbsp;     */
+&nbsp;    public static void remove(String id) {
+<b class="nc">&nbsp;        context.remove(id);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 17:04</div>
+</div>
+</body>
+</html>

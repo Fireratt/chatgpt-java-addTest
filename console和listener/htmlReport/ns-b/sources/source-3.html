@@ -1,0 +1,415 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > JSONObject</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.util.fastjson</a>
+</div>
+
+<h1>Coverage Summary for Class: JSONObject (com.plexpt.chatgpt.util.fastjson)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">JSONObject</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/40)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/108)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.util.fastjson;
+&nbsp;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.math.BigInteger;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;import static com.plexpt.chatgpt.util.fastjson.TypeUtils.*;
+&nbsp;
+&nbsp;
+&nbsp;public class JSONObject extends JSON implements Map&lt;String, Object&gt; {
+&nbsp;
+&nbsp;    private Map&lt;String, Object&gt; map;
+&nbsp;
+<b class="nc">&nbsp;    public JSONObject(Map&lt;String, Object&gt; map) {</b>
+<b class="nc">&nbsp;        this.map = map;</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public JSONObject() {</b>
+<b class="nc">&nbsp;        map = new HashMap&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    public JSONObject(int size) {</b>
+<b class="nc">&nbsp;        map = new HashMap&lt;&gt;(size);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String toJSONString() {
+<b class="nc">&nbsp;        return JSON.toJSONString(map);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public JSONObject getJSONObject(String key) {
+<b class="nc">&nbsp;        Object value = map.get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof JSONObject) {</b>
+<b class="nc">&nbsp;            return (JSONObject) value;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Map) {</b>
+<b class="nc">&nbsp;            return new JSONObject((Map) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            return JSON.parseObject((String) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return JSON.parseObject(JSON.toJSONString(value));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public JSONArray getJSONArray(String key) {
+<b class="nc">&nbsp;        Object value = map.get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return new JSONArray();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof JSONArray) {</b>
+<b class="nc">&nbsp;            return (JSONArray) value;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof List) {</b>
+<b class="nc">&nbsp;            return new JSONArray((List) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            return JSON.parseArray((String) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return JSON.parseArray(JSON.toJSONString(value));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public &lt;T&gt; T getObject(String key, Class&lt;T&gt; clazz) {
+<b class="nc">&nbsp;        Object obj = map.get(key);</b>
+<b class="nc">&nbsp;        if (clazz == obj.getClass()) {</b>
+<b class="nc">&nbsp;            return (T) obj;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (clazz == String.class) {</b>
+<b class="nc">&nbsp;            return JSON.parseObject((String) obj, clazz);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return JSON.parseObject(JSON.toJSONString(obj), clazz);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Boolean getBoolean(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return castToBoolean(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public boolean getBooleanValue(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        Boolean booleanVal = castToBoolean(value);</b>
+<b class="nc">&nbsp;        if (booleanVal == null) {</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return booleanVal.booleanValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Byte getByte(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToByte(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public byte getByteValue(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        Byte byteVal = castToByte(value);</b>
+<b class="nc">&nbsp;        if (byteVal == null) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return byteVal.byteValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Short getShort(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToShort(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public short getShortValue(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        Short shortVal = castToShort(value);</b>
+<b class="nc">&nbsp;        if (shortVal == null) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return shortVal.shortValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Integer getInteger(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToInt(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getIntValue(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        Integer intVal = castToInt(value);</b>
+<b class="nc">&nbsp;        if (intVal == null) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return intVal.intValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Long getLong(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToLong(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public long getLongValue(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        Long longVal = castToLong(value);</b>
+<b class="nc">&nbsp;        if (longVal == null) {</b>
+<b class="nc">&nbsp;            return 0L;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return longVal.longValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Float getFloat(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToFloat(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getFloatValue(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        Float floatValue = castToFloat(value);</b>
+<b class="nc">&nbsp;        if (floatValue == null) {</b>
+<b class="nc">&nbsp;            return 0F;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return floatValue.floatValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Double getDouble(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToDouble(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getDoubleValue(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        Double doubleValue = castToDouble(value);</b>
+<b class="nc">&nbsp;        if (doubleValue == null) {</b>
+<b class="nc">&nbsp;            return 0D;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return doubleValue.doubleValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public BigDecimal getBigDecimal(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToBigDecimal(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public BigInteger getBigInteger(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        return castToBigInteger(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getString(String key) {
+<b class="nc">&nbsp;        Object value = get(key);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return value.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public &lt;T&gt; T toJavaObject(Class&lt;T&gt; clazz) {
+<b class="nc">&nbsp;        if (clazz == Map.class || clazz == JSONObject.class || clazz == JSONArray.class) {</b>
+<b class="nc">&nbsp;            return (T) this;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return parseObject(toJSONString(), clazz);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        return toJSONString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Object remove(Object key) {
+<b class="nc">&nbsp;        return map.remove(key);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int size() {
+<b class="nc">&nbsp;        return map.size();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean isEmpty() {
+<b class="nc">&nbsp;        return map.isEmpty();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean containsKey(Object key) {
+<b class="nc">&nbsp;        return map.containsKey(key);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean containsValue(Object value) {
+<b class="nc">&nbsp;        return map.containsValue(value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Object get(Object key) {
+<b class="nc">&nbsp;        return map.get(key);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Object put(String key, Object value) {
+<b class="nc">&nbsp;        return map.put(key, value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void putAll(Map&lt;? extends String, ?&gt; m) {
+<b class="nc">&nbsp;        map.putAll(m);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void clear() {
+<b class="nc">&nbsp;        map.clear();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Set&lt;String&gt; keySet() {
+<b class="nc">&nbsp;        return map.keySet();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Collection&lt;Object&gt; values() {
+<b class="nc">&nbsp;        return map.values();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Set&lt;Entry&lt;String, Object&gt;&gt; entrySet() {
+<b class="nc">&nbsp;        return map.entrySet();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o) {
+<b class="nc">&nbsp;        return map.equals(o);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode() {
+<b class="nc">&nbsp;        return map.hashCode();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 17:04</div>
+</div>
+</body>
+</html>

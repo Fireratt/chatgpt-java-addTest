@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Message</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.chat</a>
+</div>
+
+<h1>Coverage Summary for Class: Message (com.plexpt.chatgpt.entity.chat)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Message</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (2/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    57.1%
+  </span>
+  <span class="absValue">
+    (4/7)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Message$Role</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (3/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/12)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.chat;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.fasterxml.jackson.annotation.JsonInclude;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;import lombok.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author plexpt
+&nbsp; */
+&nbsp;@Data
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor
+&nbsp;@Builder
+&nbsp;@JsonInclude(JsonInclude.Include.NON_NULL)
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;public class Message {
+&nbsp;    /**
+&nbsp;     * 目前支持三种角色参考官网，进行情景输入：https://platform.openai.com/docs/guides/chat/introduction
+&nbsp;     */
+&nbsp;    private String role;
+&nbsp;    public Object content;
+&nbsp;
+&nbsp;    private String name;
+&nbsp;
+&nbsp;
+&nbsp;    @JsonProperty(&quot;tool_calls&quot;)
+&nbsp;    private List&lt;ToolCallResult&gt; toolCalls;
+&nbsp;
+<b class="fc">&nbsp;    public Message(String role, String content) {</b>
+<b class="fc">&nbsp;        this.role = role;</b>
+<b class="fc">&nbsp;        this.content = content;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Message of(String content) {
+&nbsp;
+<b class="fc">&nbsp;        return new Message(Message.Role.USER.getValue(), content);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Message ofSystem(String content) {
+&nbsp;
+<b class="nc">&nbsp;        return new Message(Role.SYSTEM.getValue(), content);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Message ofAssistant(String content) {
+&nbsp;
+<b class="nc">&nbsp;        return new Message(Role.ASSISTANT.getValue(), content);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Message ofFunction(String function) {
+&nbsp;
+<b class="nc">&nbsp;        return new Message(Role.FUNCTION.getValue(), function);</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    @Getter</b>
+&nbsp;    @AllArgsConstructor
+&nbsp;    public enum Role {
+&nbsp;
+<b class="fc">&nbsp;        SYSTEM(&quot;system&quot;),</b>
+<b class="fc">&nbsp;        USER(&quot;user&quot;),</b>
+<b class="fc">&nbsp;        ASSISTANT(&quot;assistant&quot;),</b>
+&nbsp;
+<b class="fc">&nbsp;        FUNCTION(&quot;function&quot;),</b>
+&nbsp;        ;
+&nbsp;        private String value;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 17:04</div>
+</div>
+</body>
+</html>

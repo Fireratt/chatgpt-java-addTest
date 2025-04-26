@@ -27,77 +27,58 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
-
 public class ConsoleChatGPT {
 
     public static Proxy proxy = Proxy.NO_PROXY;
 
     public static void main(String[] args) {
-
         System.out.println("ChatGPT - Java command-line interface");
         System.out.println("Press enter twice to submit your question.");
         System.out.println();
         System.out.println("按两次回车以提交您的问题！！！");
-        System.out.println("按两次回车以提交您的问题！！！");
-        System.out.println("按两次回车以提交您的问题！！！");
 
-
-        System.out.println();
-        System.out.println("Please enter APIKEY, press Enter twice to submit:");
         String key = getInput("请输入APIKEY，按两次回车以提交:\n");
         check(key);
 
-        // 询问用户是否使用代理  国内需要代理
-        System.out.println("是否使用代理？(y/n): ");
-        System.out.println("use proxy？(y/n): ");
-        String useProxy = getInput("按两次回车以提交:\n");
-        if (useProxy.equalsIgnoreCase("y")) {
+        configureProxy();
 
-            // 输入代理地址
+        ChatGPTStream chatGPT = ChatGPTStream.builder()
+                .apiKey(key)
+                .proxy(proxy)
+                .build()
+                .init();
+
+        runWith(key, chatGPT);
+    }
+
+    // ✅ 新增：抽出代理配置
+    public static void configureProxy() {
+        System.out.println("是否使用代理？(y/n): ");
+        String useProxy = getInput("按两次回车以提交:\n");
+
+        if (useProxy.equalsIgnoreCase("y")) {
             System.out.println("请输入代理类型(http/socks): ");
             String type = getInput("按两次回车以提交:\n");
 
-            // 输入代理地址
             System.out.println("请输入代理IP: ");
             String proxyHost = getInput("按两次回车以提交:\n");
 
-            // 输入代理端口
             System.out.println("请输入代理端口: ");
             String portStr = getInput("按两次回车以提交:\n");
-            Integer proxyPort = Integer.parseInt(portStr);
+            int proxyPort = Integer.parseInt(portStr);
 
-            if (type.equals("http")) {
-                proxy = Proxys.http(proxyHost, proxyPort);
-            } else {
-                proxy = Proxys.socks5(proxyHost, proxyPort);
-            }
-
+            proxy = "http".equalsIgnoreCase(type)
+                    ? Proxys.http(proxyHost, proxyPort)
+                    : Proxys.socks5(proxyHost, proxyPort);
         }
+    }
 
-//        System.out.println("Inquiry balance...");
-//        System.out.println("查询余额中...");
-//        BigDecimal balance = getBalance(key);
-//        System.out.println("API KEY balance: " + balance.toPlainString());
-//
-//        if (!NumberUtil.isGreater(balance, BigDecimal.ZERO)) {
-//            System.out.println("API KEY 余额不足: ");
-//            return;
-//        }
-
-
+    // ✅ 拆出核心逻辑
+    public static void runWith(String key, ChatGPTStream chatGPT) {
         while (true) {
             String prompt = getInput("\nYou:\n");
 
-            ChatGPTStream chatGPT = ChatGPTStream.builder()
-                    .apiKey(key)
-                    .proxy(proxy)
-                    .build()
-                    .init();
-
             System.out.println("AI: ");
-
-
-            //卡住
             CountDownLatch countDownLatch = new CountDownLatch(1);
 
             Message message = Message.of(prompt);
@@ -109,35 +90,22 @@ public class ConsoleChatGPT {
                 }
             };
 
-            listener.setOnComplete(msg -> {
-                countDownLatch.countDown();
-            });
+            listener.setOnComplete(msg -> countDownLatch.countDown());
+
             chatGPT.streamChatCompletion(Arrays.asList(message), listener);
 
             try {
                 countDownLatch.await();
+                break;
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                break;
             }
-
         }
-
-
     }
 
-    // private static BigDecimal getBalance(String key) {
-
-    //     ChatGPT chatGPT = ChatGPT.builder()
-    //             .apiKey(key)
-    //             .proxy(proxy)
-    //             .build()
-    //             .init();
-
-    //     return chatGPT.balance();
-    // }
-
     private static void check(String key) {
-        if (key == null || key.isEmpty()) {
+        if (key == null || key.trim().isEmpty()) {
             throw new RuntimeException("请输入正确的KEY");
         }
     }
@@ -158,4 +126,6 @@ public class ConsoleChatGPT {
         return lines.stream().collect(Collectors.joining("\n"));
     }
 }
+
+
 

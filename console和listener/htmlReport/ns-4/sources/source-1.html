@@ -1,0 +1,305 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ChatCompletion</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.chat</a>
+</div>
+
+<h1>Coverage Summary for Class: ChatCompletion (com.plexpt.chatgpt.entity.chat)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChatCompletion</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ChatCompletion$Model</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.chat;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.fasterxml.jackson.annotation.JsonInclude;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;import com.plexpt.chatgpt.util.TokensUtil;
+&nbsp;import lombok.*;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;/**
+&nbsp; * chat
+&nbsp; *
+&nbsp; * @author plexpt
+&nbsp; * @link https://platform.openai.com/docs/overview
+&nbsp; */
+&nbsp;@Data
+&nbsp;@Builder
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor(force = true)
+&nbsp;@JsonInclude(JsonInclude.Include.NON_NULL)
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+<b class="fc">&nbsp;public class ChatCompletion {</b>
+&nbsp;
+&nbsp;    @NonNull
+&nbsp;    @Builder.Default
+&nbsp;    private String model = &quot;gpt-3.5-turbo&quot;;
+&nbsp;
+&nbsp;    @NonNull
+&nbsp;    private List&lt;Message&gt; messages;
+&nbsp;    /**
+&nbsp;     * 使用什么取样温度，0到2之间。越高越奔放。越低越保守。
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 不要同时改这个和topP
+&nbsp;     */
+&nbsp;    private Double temperature;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 0-1
+&nbsp;     * 建议0.9
+&nbsp;     * 不要同时改这个和temperature
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;top_p&quot;)
+&nbsp;    private Double topP;
+&nbsp;
+&nbsp;
+&nbsp;    @JsonProperty(&quot;tool_choice&quot;)
+&nbsp;    String toolChoice;
+&nbsp;
+&nbsp;    List&lt;ChatTool&gt; tools;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 结果数。
+&nbsp;     */
+&nbsp;    @Builder.Default
+&nbsp;    Integer n = 1;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 是否流式输出.
+&nbsp;     * default:false
+&nbsp;     */
+&nbsp;    @Builder.Default
+&nbsp;    Boolean stream = false;
+&nbsp;    /**
+&nbsp;     * 停用词
+&nbsp;     * &lt;p&gt;
+&nbsp;     * stop 参数用于指定 API 生成令牌时应停止的序列。该参数可以是字符串、字符串数组或 null，最多可以包含 4 个序列。这是一个可选参数，默认值为 null。
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 参数说明
+&nbsp;     * 类型：string、array 或 null
+&nbsp;     * 可选：是
+&nbsp;     * 默认值：null
+&nbsp;     * 用途：指定在生成的文本中，API 遇到这些序列时停止生成后续令牌
+&nbsp;     * 使用场景
+&nbsp;     * 单个停止序列：
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 如果指定一个字符串，API 在生成文本时遇到该字符串就会停止。例如，如果设置 stop 参数为 &quot;END&quot;, 当生成的文本包含 &quot;END&quot; 时，API 将停止生成后续文本。
+&nbsp;     * 多个停止序列：
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 如果指定一个字符串数组，API 在生成文本时遇到任何一个字符串都会停止。例如，如果设置 stop 参数为 [&quot;END&quot;, &quot;STOP&quot;], 当生成的文本包含 &quot;END&quot; 或 &quot;STOP&quot; 时，API 将停止生成后续文本。
+&nbsp;     * 不使用停止序列：
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 如果将 stop 参数设置为 null 或不设置，API 将根据其默认行为生成文本，直到达到最大令牌限制或结束标记。
+&nbsp;     */
+&nbsp;    List&lt;String&gt; stop;
+&nbsp;    /**
+&nbsp;     * 3.5 最大支持4096
+&nbsp;     * 4.0 最大32k
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;max_tokens&quot;)
+&nbsp;    Integer maxTokens;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Optional
+&nbsp;     * Defaults to 0
+&nbsp;     * Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far,
+&nbsp;     * increasing the model&#39;s likelihood to talk about new topics.
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;presence_penalty&quot;)
+&nbsp;    Double presencePenalty;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * -2.0 ~~ 2.0 Defaults to 0
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;frequency_penalty&quot;)
+&nbsp;    Double frequencyPenalty;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Optional
+&nbsp;     * Defaults to null
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;logit_bias&quot;)
+&nbsp;    Map logitBias;
+&nbsp;    /**
+&nbsp;     * 用户唯一值，确保接口不被重复调用
+&nbsp;     */
+&nbsp;    String user;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 返回格式  当前只有gpt-3.5-turbo-1106和gpt-4-1106-preview 支持json_object格式返回
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;response_format&quot;)
+&nbsp;    ResponseFormat responseFormat;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * boolean or null
+&nbsp;     * &lt;p&gt;
+&nbsp;     * Optional
+&nbsp;     * Defaults to false
+&nbsp;     */
+&nbsp;    Boolean logprobs;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * integer or null
+&nbsp;     * &lt;p&gt;
+&nbsp;     * Optional
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;top_logprobs&quot;)
+&nbsp;    Integer topLogprobs;
+&nbsp;
+&nbsp;    Integer seed;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Specifies the latency tier to use for processing the request. This parameter is relevant for customers subscribed to the scale tier service:
+&nbsp;     * &lt;p&gt;
+&nbsp;     * If set to &#39;auto&#39;, the system will utilize scale tier credits until they are exhausted.
+&nbsp;     * If set to &#39;default&#39;, the request will be processed using the default service tier with a lower uptime SLA and no latency guarentee.
+&nbsp;     * When this parameter is set, the response body will include the service_tier utilized.
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;service_tier&quot;)
+&nbsp;    String serviceTier;
+&nbsp;
+&nbsp;    @JsonProperty(&quot;stream_options&quot;)
+&nbsp;    StreamOption streamOptions;
+&nbsp;
+&nbsp;    @JsonProperty(&quot;parallel_tool_calls&quot;)
+&nbsp;    Boolean parallelToolCalls;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * model
+&nbsp;     */
+&nbsp;    public interface Model {
+&nbsp;        /**
+&nbsp;         * gpt-3.5-turbo
+&nbsp;         */
+&nbsp;        String GPT_3_5_TURBO = &quot;gpt-3.5-turbo&quot;;
+&nbsp;        /**
+&nbsp;         * GPT4.0
+&nbsp;         */
+&nbsp;        String GPT4 = &quot;gpt-4&quot;;
+&nbsp;        String GPT4o = &quot;gpt-4o&quot;;
+&nbsp;        String GPT4oMini = &quot;gpt-4o-mini&quot;;
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 计算token
+&nbsp;     *
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public int countTokens() {
+<b class="nc">&nbsp;        return TokensUtil.tokens(this.model, this.messages);</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 17:04</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Api</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.api</a>
+</div>
+
+<h1>Coverage Summary for Class: Api (com.plexpt.chatgpt.api)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">Api$MockitoMock$vpI0R5Pd</td>
+  </tr>
+  <tr>
+    <td class="name">Api$MockitoMock$vpI0R5Pd$auxiliary$29Uvok06</td>
+  </tr>
+  <tr>
+    <td class="name">Api$MockitoMock$vpI0R5Pd$auxiliary$WCXydviO</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.api;
+&nbsp;
+&nbsp;import com.plexpt.chatgpt.entity.BaseResponse;
+&nbsp;import com.plexpt.chatgpt.entity.DeleteResponse;
+&nbsp;import com.plexpt.chatgpt.entity.FileResponse;
+&nbsp;import com.plexpt.chatgpt.entity.audio.AudioResponse;
+&nbsp;import com.plexpt.chatgpt.entity.audio.SpeechRequest;
+&nbsp;import com.plexpt.chatgpt.entity.audio.Transcriptions;
+&nbsp;import com.plexpt.chatgpt.entity.billing.CreditGrantsResponse;
+&nbsp;import com.plexpt.chatgpt.entity.billing.SubscriptionData;
+&nbsp;import com.plexpt.chatgpt.entity.billing.UseageResponse;
+&nbsp;import com.plexpt.chatgpt.entity.chat.ChatCompletion;
+&nbsp;import com.plexpt.chatgpt.entity.chat.ChatCompletionResponse;
+&nbsp;import com.plexpt.chatgpt.entity.embedding.EmbeddingRequest;
+&nbsp;import com.plexpt.chatgpt.entity.embedding.EmbeddingResult;
+&nbsp;import com.plexpt.chatgpt.entity.images.Edits;
+&nbsp;import com.plexpt.chatgpt.entity.images.Generations;
+&nbsp;import com.plexpt.chatgpt.entity.images.ImagesRensponse;
+&nbsp;import com.plexpt.chatgpt.entity.images.Variations;
+&nbsp;import io.reactivex.Single;
+&nbsp;import okhttp3.MultipartBody;
+&nbsp;import okhttp3.RequestBody;
+&nbsp;import okhttp3.ResponseBody;
+&nbsp;import retrofit2.http.*;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;
+&nbsp;/**
+&nbsp; * API接口
+&nbsp; * API interface
+&nbsp; */
+&nbsp;public interface Api {
+&nbsp;
+&nbsp;    String DEFAULT_API_HOST = &quot;https://api.openai.com/&quot;;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 聊天
+&nbsp;     * Chat
+&nbsp;     */
+&nbsp;    @POST(&quot;v1/chat/completions&quot;)
+&nbsp;    Single&lt;ChatCompletionResponse&gt; chatCompletion(@Body ChatCompletion chatCompletion);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 图像生成
+&nbsp;     * Image generations
+&nbsp;     */
+&nbsp;    @POST(&quot;v1/images/generations&quot;)
+&nbsp;    Single&lt;ImagesRensponse&gt; imageGenerations(@Body Generations generations);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 图像编辑
+&nbsp;     * Image edits
+&nbsp;     */
+&nbsp;    @Multipart
+&nbsp;    @POST(&quot;v1/images/edits&quot;)
+&nbsp;    Single&lt;ImagesRensponse&gt; imageEdits(@Part() MultipartBody.Part image,
+&nbsp;                                       @Part() MultipartBody.Part mask,
+&nbsp;                                       @PartMap Edits edits);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 图像变体
+&nbsp;     * Image variations
+&nbsp;     */
+&nbsp;    @Multipart
+&nbsp;    @POST(&quot;v1/images/variations&quot;)
+&nbsp;    Single&lt;ImagesRensponse&gt; imageVariations(@Part() MultipartBody.Part image,
+&nbsp;                                            @PartMap Variations variations);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 生成语音
+&nbsp;     * Create speech
+&nbsp;     */
+&nbsp;    @POST(&quot;v1/audio/speech&quot;)
+&nbsp;    Single&lt;ResponseBody&gt; audioSpeech(@Body SpeechRequest speechRequest);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 音频转录
+&nbsp;     * Audio transcriptions
+&nbsp;     */
+&nbsp;    @Multipart
+&nbsp;    @POST(&quot;v1/audio/transcriptions&quot;)
+&nbsp;    Single&lt;AudioResponse&gt; audioTranscriptions(@Part() MultipartBody.Part audio,
+&nbsp;                                              @PartMap Transcriptions transcriptions);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 音频翻译
+&nbsp;     * Audio translations
+&nbsp;     */
+&nbsp;    @Multipart
+&nbsp;    @POST(&quot;v1/audio/translations&quot;)
+&nbsp;    Single&lt;AudioResponse&gt; audioTranslations(@Part() MultipartBody.Part audio,
+&nbsp;                                            @PartMap Transcriptions transcriptions);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 余额查询
+&nbsp;     * Credit grants query
+&nbsp;     */
+&nbsp;    @GET(&quot;dashboard/billing/credit_grants&quot;)
+&nbsp;    Single&lt;CreditGrantsResponse&gt; creditGrants();
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 订阅查询
+&nbsp;     * Subscription query
+&nbsp;     */
+&nbsp;    @GET(&quot;v1/dashboard/billing/subscription&quot;)
+&nbsp;    Single&lt;SubscriptionData&gt; subscription();
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 使用情况查询
+&nbsp;     * Usage query
+&nbsp;     */
+&nbsp;    @GET(&quot;v1/dashboard/billing/usage&quot;)
+&nbsp;    Single&lt;UseageResponse&gt; usage(@Query(&quot;start_date&quot;) String startDate,
+&nbsp;                                 @Query(&quot;end_date&quot;) String endDate);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 生成向量
+&nbsp;     * Create embeddings
+&nbsp;     */
+&nbsp;    @POST(&quot;v1/embeddings&quot;)
+&nbsp;    Single&lt;EmbeddingResult&gt; createEmbeddings(@Body EmbeddingRequest request);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 列出文件
+&nbsp;     * List files
+&nbsp;     */
+&nbsp;    @GET(&quot;/v1/files&quot;)
+&nbsp;    Single&lt;BaseResponse&lt;FileResponse&gt;&gt; listFiles();
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 上传文件
+&nbsp;     * Upload file
+&nbsp;     */
+&nbsp;    @Multipart
+&nbsp;    @POST(&quot;/v1/files&quot;)
+&nbsp;    Single&lt;FileResponse&gt; uploadFile(@Part(&quot;purpose&quot;) RequestBody purpose, @Part MultipartBody.Part file);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 删除文件
+&nbsp;     * Delete file
+&nbsp;     */
+&nbsp;    @DELETE(&quot;/v1/files/{file_id}&quot;)
+&nbsp;    Single&lt;DeleteResponse&gt; deleteFile(@Path(&quot;file_id&quot;) String fileId);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 检索文件
+&nbsp;     * Retrieve file
+&nbsp;     */
+&nbsp;    @GET(&quot;/v1/files/{file_id}&quot;)
+&nbsp;    Single&lt;FileResponse&gt; retrieveFile(@Path(&quot;file_id&quot;) String fileId);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 检索文件内容
+&nbsp;     * Retrieve file content
+&nbsp;     */
+&nbsp;    @Streaming
+&nbsp;    @GET(&quot;/v1/files/{file_id}/content&quot;)
+&nbsp;    Single&lt;ResponseBody&gt; retrieveFileContent(@Path(&quot;file_id&quot;) String fileId);
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 17:04</div>
+</div>
+</body>
+</html>

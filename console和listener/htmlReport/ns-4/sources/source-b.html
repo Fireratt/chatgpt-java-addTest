@@ -1,0 +1,116 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ChatChoice</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.chat</a>
+</div>
+
+<h1>Coverage Summary for Class: ChatChoice (com.plexpt.chatgpt.entity.chat)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ChatChoice</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.chat;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;import lombok.Data;
+&nbsp;
+&nbsp;/**
+&nbsp; * @author plexpt
+&nbsp; */
+&nbsp;@Data
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;public class ChatChoice {
+&nbsp;
+&nbsp;    private Integer index;
+&nbsp;    /**
+&nbsp;     * 请求参数stream为true返回是delta
+&nbsp;     */
+&nbsp;    private MessageResponse delta;
+&nbsp;    /**
+&nbsp;     * 请求参数stream为false返回是message
+&nbsp;     */
+&nbsp;    private MessageResponse message;
+&nbsp;    /**
+&nbsp;     * The reason the model stopped generating tokens. This will be stop if the model hit a natural stop point or a provided stop sequence, length if the maximum number of tokens specified in the request was reached, content_filter if content was omitted due to a flag from our content filters, tool_calls if the model called a tool, or function_call (deprecated) if the model called a function.
+&nbsp;     * 用于指示模型停止生成令牌的原因。这个参数在响应体中返回，用于解释生成过程为什么终止。
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 可能的值
+&nbsp;     * stop：
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 模型达到了一个自然的停止点或遇到了提供的停止序列。
+&nbsp;     * 例如，生成的文本包含一个定义的停止序列（如 &quot;END&quot;），或者模型认为已经生成了一个完整的句子或段落。
+&nbsp;     * length：
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 达到了请求中指定的最大令牌数。
+&nbsp;     * 例如，请求中设置了 max_tokens 为 50，当生成的令牌数量达到 50 时，模型停止生成。
+&nbsp;     * content_filter：
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 由于内容过滤器的标志，部分内容被省略。
+&nbsp;     * 例如，生成的文本可能包含不适当的内容，触发了内容过滤器，导致生成过程提前终止。
+&nbsp;     * tool_calls：
+&nbsp;     * &lt;p&gt;
+&nbsp;     * 模型调用了一个工具。
+&nbsp;     * 这种情况通常用于增强模型的功能，如调用外部API或执行特定任务。
+&nbsp;     */
+&nbsp;    @JsonProperty(&quot;finish_reason&quot;)
+&nbsp;    private String finishReason;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 17:04</div>
+</div>
+</body>
+</html>
