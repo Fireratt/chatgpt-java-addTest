@@ -1,0 +1,220 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TokensUtil</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.util</a>
+</div>
+
+<h1>Coverage Summary for Class: TokensUtil (com.plexpt.chatgpt.util)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TokensUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.util;
+&nbsp;
+&nbsp;import com.knuddels.jtokkit.Encodings;
+&nbsp;import com.knuddels.jtokkit.api.Encoding;
+&nbsp;import com.knuddels.jtokkit.api.EncodingRegistry;
+&nbsp;import com.knuddels.jtokkit.api.EncodingType;
+&nbsp;import com.knuddels.jtokkit.api.ModelType;
+&nbsp;import com.plexpt.chatgpt.entity.chat.Message;
+&nbsp;import lombok.experimental.UtilityClass;
+&nbsp;import org.springframework.util.CollectionUtils;
+&nbsp;import org.springframework.util.StringUtils;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@UtilityClass
+&nbsp;public class TokensUtil {
+&nbsp;
+<b class="nc">&nbsp;    public static EncodingRegistry registry = Encodings.newDefaultEncodingRegistry();</b>
+<b class="nc">&nbsp;    public static Encoding encoding = registry.getEncoding(EncodingType.CL100K_BASE);</b>
+<b class="nc">&nbsp;    public static Encoding encoding4o = registry.getEncoding(EncodingType.O200K_BASE);</b>
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 计算text信息的tokens
+&nbsp;     *
+&nbsp;     * @param text
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public static int countTextTokens(String text) {
+<b class="nc">&nbsp;        return encoding4o.countTokens(text);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 计算text信息的tokens
+&nbsp;     *
+&nbsp;     * @param text
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public static int countTextTokens(String text, String model) {
+<b class="nc">&nbsp;        if (StringUtils.startsWithIgnoreCase(model, ModelType.GPT_3_5_TURBO.getName())) {</b>
+<b class="nc">&nbsp;            return encoding.countTokens(text);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return encoding4o.countTokens(text);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 获取modelType
+&nbsp;     *
+&nbsp;     * @param name
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public static ModelType getModelTypeByName(String name) {
+<b class="nc">&nbsp;        Optional&lt;ModelType&gt; optional = ModelType.fromName(name);</b>
+&nbsp;
+<b class="nc">&nbsp;        return optional.orElse(ModelType.GPT_3_5_TURBO);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 通过模型名称计算messages获取编码数组
+&nbsp;     * 参考官方的处理逻辑：
+&nbsp;     * &lt;a href=https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb&gt;https://github.com/openai/openai-cookbook/blob/main/examples/How_to_count_tokens_with_tiktoken.ipynb&lt;/a&gt;
+&nbsp;     *
+&nbsp;     * @param messages 消息体
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public static int tokens(List&lt;Message&gt; messages, String model) {
+<b class="nc">&nbsp;        if (CollectionUtils.isEmpty(messages)) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        Encoding encodingUsed = encoding;</b>
+&nbsp;        //&quot;gpt-3.5-turbo&quot;
+&nbsp;        // every message follows &lt;|start|&gt;{role/name}\n{content}&lt;|end|&gt;\n
+<b class="nc">&nbsp;        int tokensPerMessage = 4;</b>
+&nbsp;        // if there&#39;s a name, the role is omitted
+<b class="nc">&nbsp;        int tokensPerName = -1;</b>
+&nbsp;
+<b class="nc">&nbsp;        if (StringUtils.startsWithIgnoreCase(model, ModelType.GPT_4.getName())) {</b>
+<b class="nc">&nbsp;            tokensPerMessage = 3;</b>
+<b class="nc">&nbsp;            tokensPerName = 1;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (StringUtils.startsWithIgnoreCase(model, ModelType.GPT_4O.getName())) {</b>
+<b class="nc">&nbsp;            encodingUsed = encoding4o;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int sum = 0;</b>
+<b class="nc">&nbsp;        for (final Message message : messages) {</b>
+<b class="nc">&nbsp;            sum += tokensPerMessage;</b>
+<b class="nc">&nbsp;            sum += encodingUsed.countTokens((String) message.getContent());</b>
+<b class="nc">&nbsp;            sum += encodingUsed.countTokens(message.getRole());</b>
+<b class="nc">&nbsp;            if (!StringUtils.isEmpty(message.getName())) {</b>
+<b class="nc">&nbsp;                sum += encodingUsed.countTokens(message.getName());</b>
+<b class="nc">&nbsp;                sum += tokensPerName;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;        // every reply is primed with &lt;|start|&gt;assistant&lt;|message|&gt;
+<b class="nc">&nbsp;        sum += 3;</b>
+&nbsp;
+<b class="nc">&nbsp;        return sum;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * 计算tokens
+&nbsp;     *
+&nbsp;     * @param modelName 模型名称
+&nbsp;     * @param messages  消息列表
+&nbsp;     * @return 计算出的tokens数量
+&nbsp;     */
+&nbsp;
+&nbsp;    public static int tokens(String modelName, List&lt;Message&gt; messages) {
+<b class="nc">&nbsp;        return tokens(messages, modelName);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 17:04</div>
+</div>
+</body>
+</html>
