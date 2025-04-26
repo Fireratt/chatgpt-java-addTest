@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > ChatCompletionResponse</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.chat</a>
+</div>
+
+<h1>Coverage Summary for Class: ChatCompletionResponse (com.plexpt.chatgpt.entity.chat)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChatCompletionResponse</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    42.9%
+  </span>
+  <span class="absValue">
+    (6/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.chat;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;import com.plexpt.chatgpt.entity.billing.Usage;
+&nbsp;import lombok.Data;
+&nbsp;import org.springframework.util.CollectionUtils;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;/**
+&nbsp; * chat答案类
+&nbsp; *
+&nbsp; * @author plexpt
+&nbsp; */
+&nbsp;@Data
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;public class ChatCompletionResponse {
+&nbsp;    private String id;
+&nbsp;    private String object;
+&nbsp;    private Long created;
+&nbsp;    private String model;
+&nbsp;    @JsonProperty(&quot;system_fingerprint&quot;)
+&nbsp;    private String systemFingerprint;
+&nbsp;    private List&lt;ChatChoice&gt; choices;
+&nbsp;    private Usage usage;
+&nbsp;
+&nbsp;    @JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;    Object logprobs;
+&nbsp;
+&nbsp;
+&nbsp;    public String toPlainString() {
+<b class="nc">&nbsp;        if (CollectionUtils.isEmpty(this.getChoices())) {</b>
+<b class="nc">&nbsp;            return &quot;&quot;;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        return Optional.ofNullable(this.getChoices())</b>
+<b class="nc">&nbsp;                .map(e -&gt; e.get(0))</b>
+<b class="nc">&nbsp;                .map(ChatChoice::getMessage)</b>
+<b class="nc">&nbsp;                .map(MessageResponse::getContent)</b>
+<b class="nc">&nbsp;                .orElse(&quot;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String toPlainStringStream() {
+<b class="fc">&nbsp;        if (CollectionUtils.isEmpty(this.getChoices())) {</b>
+<b class="nc">&nbsp;            return &quot;&quot;;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        return Optional.ofNullable(this.getChoices())</b>
+<b class="fc">&nbsp;                .map(e -&gt; e.get(0))</b>
+<b class="fc">&nbsp;                .map(ChatChoice::getDelta)</b>
+<b class="fc">&nbsp;                .map(MessageResponse::getContent)</b>
+<b class="fc">&nbsp;                .orElse(&quot;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 16:39</div>
+</div>
+</body>
+</html>

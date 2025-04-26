@@ -1,0 +1,105 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > EmbeddingResult</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.embedding</a>
+</div>
+
+<h1>Coverage Summary for Class: EmbeddingResult (com.plexpt.chatgpt.entity.embedding)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">EmbeddingResult</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.embedding;
+&nbsp;
+&nbsp;import com.plexpt.chatgpt.entity.billing.Usage;
+&nbsp;import lombok.Data;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * 向量结果
+&nbsp; *
+&nbsp; * @author hq
+&nbsp; * @version 1.0
+&nbsp; * @date 2023/12/12
+&nbsp; */
+&nbsp;@Data
+&nbsp;public class EmbeddingResult {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The GPTmodel used for generating embeddings
+&nbsp;     */
+&nbsp;    String model;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The type of object returned, should be &quot;list&quot;
+&nbsp;     */
+&nbsp;    String object;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * A list of the calculated embeddings
+&nbsp;     */
+&nbsp;    List&lt;EmbeddingData&gt; data;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The API usage for this request
+&nbsp;     */
+&nbsp;    Usage usage;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 16:39</div>
+</div>
+</body>
+</html>

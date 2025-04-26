@@ -1,0 +1,108 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > CompletionUseage</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.chat</a>
+</div>
+
+<h1>Coverage Summary for Class: CompletionUseage (com.plexpt.chatgpt.entity.chat)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">CompletionUseage</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.chat;
+&nbsp;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.fasterxml.jackson.annotation.JsonInclude;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.Data;
+&nbsp;import lombok.NoArgsConstructor;
+&nbsp;
+&nbsp;/**
+&nbsp; *
+&nbsp; * completion_tokens
+&nbsp; * integer
+&nbsp; *
+&nbsp; * Number of tokens in the generated completion.
+&nbsp; *
+&nbsp; * prompt_tokens
+&nbsp; * integer
+&nbsp; *
+&nbsp; * Number of tokens in the prompt.
+&nbsp; *
+&nbsp; * total_tokens
+&nbsp; * integer
+&nbsp; *
+&nbsp; * Total number of tokens used in the request (prompt + completion).
+&nbsp; *
+&nbsp; * @author pt
+&nbsp; */
+&nbsp;@Data
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor(force = true)
+&nbsp;@JsonInclude(JsonInclude.Include.NON_NULL)
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;public class CompletionUseage {
+&nbsp;
+&nbsp;    Integer completion_tokens;
+&nbsp;    Integer prompt_tokens;
+&nbsp;    Integer total_tokens;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 16:39</div>
+</div>
+</body>
+</html>

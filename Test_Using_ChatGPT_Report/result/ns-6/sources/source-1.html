@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > Edits</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.images</a>
+</div>
+
+<h1>Coverage Summary for Class: Edits (com.plexpt.chatgpt.entity.images)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Edits</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.images;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.plexpt.chatgpt.entity.images.enums.ResponseFormat;
+&nbsp;import okhttp3.MediaType;
+&nbsp;import okhttp3.RequestBody;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.util.HashMap;
+&nbsp;
+&nbsp;/**
+&nbsp; * @Author matoooo
+&nbsp; * @Date 2023/8/25 11:45
+&nbsp; * @Description: TODO
+&nbsp; */
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;public class Edits extends HashMap&lt;String, RequestBody&gt; {
+&nbsp;
+<b class="nc">&nbsp;    public Edits(String prompt, int n, String size,String response_format){</b>
+<b class="nc">&nbsp;        this.put(&quot;prompt&quot;,RequestBody.create(MediaType.parse(&quot;text/plain;charset=UTF-8&quot;), prompt));</b>
+<b class="nc">&nbsp;        this.put(&quot;n&quot;,RequestBody.create(MediaType.parse(&quot;text/plain;charset=UTF-8&quot;), String.valueOf(n)));</b>
+<b class="nc">&nbsp;        this.put(&quot;size&quot;,RequestBody.create(MediaType.parse(&quot;text/plain;charset=UTF-8&quot;), size));</b>
+<b class="nc">&nbsp;        this.put(&quot;response_format&quot;,RequestBody.create(MediaType.parse(&quot;text/plain;charset=UTF-8&quot;), response_format));</b>
+&nbsp;    }
+&nbsp;    public static Edits ofURL(String prompt, int n, String size) {
+<b class="nc">&nbsp;        return new Edits(prompt,n,size,ResponseFormat.URL.getValue());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Edits ofB64_JSON(String prompt, int n, String size) {
+<b class="nc">&nbsp;        return new Edits(prompt,n,size,ResponseFormat.B64_JSON.getValue());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 16:39</div>
+</div>
+</body>
+</html>

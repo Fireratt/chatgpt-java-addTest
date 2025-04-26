@@ -1,0 +1,113 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > ChatToolFunction</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.chat</a>
+</div>
+
+<h1>Coverage Summary for Class: ChatToolFunction (com.plexpt.chatgpt.entity.chat)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">ChatToolFunction$ChatParameter</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.chat;
+&nbsp;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.fasterxml.jackson.annotation.JsonInclude;
+&nbsp;import lombok.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Data
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor
+&nbsp;@Builder
+&nbsp;@JsonInclude(JsonInclude.Include.NON_NULL)
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;public class ChatToolFunction {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Required
+&nbsp;     * The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+&nbsp;     */
+&nbsp;    @NonNull
+&nbsp;    String name;
+&nbsp;
+&nbsp;    String description;
+&nbsp;
+&nbsp;    ChatParameter parameters;
+&nbsp;
+&nbsp;
+&nbsp;    @Data
+&nbsp;    @AllArgsConstructor
+&nbsp;    @NoArgsConstructor
+&nbsp;    @Builder
+&nbsp;    @JsonInclude(JsonInclude.Include.NON_NULL)
+&nbsp;    public static class ChatParameter {
+&nbsp;
+&nbsp;        String type;
+&nbsp;        List&lt;String&gt; required;
+&nbsp;        Object properties;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 16:39</div>
+</div>
+</body>
+</html>

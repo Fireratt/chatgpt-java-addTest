@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > Generations</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.entity.images</a>
+</div>
+
+<h1>Coverage Summary for Class: Generations (com.plexpt.chatgpt.entity.images)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Generations</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Generations$Model</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.entity.images;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+&nbsp;import com.fasterxml.jackson.annotation.JsonInclude;
+&nbsp;import com.plexpt.chatgpt.entity.images.enums.ResponseFormat;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.Builder;
+&nbsp;import lombok.Data;
+&nbsp;import lombok.Getter;
+&nbsp;import lombok.NoArgsConstructor;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;
+&nbsp;/**
+&nbsp; * @Author matoooo
+&nbsp; * @Date 2023/8/25 10:59
+&nbsp; * @Description: 图片生成
+&nbsp; */
+&nbsp;@Data
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor
+&nbsp;@Builder
+&nbsp;@JsonInclude(JsonInclude.Include.NON_NULL)
+&nbsp;@JsonIgnoreProperties(ignoreUnknown = true)
+&nbsp;public class Generations {
+&nbsp;    private String prompt;
+&nbsp;    /**
+&nbsp;     * Optional Defaults to dall-e-2
+&nbsp;     * &lt;br/&gt;
+&nbsp;     * The model to use for image generation.
+&nbsp;     */
+&nbsp;    private String model;
+&nbsp;    private int n;
+&nbsp;    /**
+&nbsp;     * Optional Defaults to standard
+&nbsp;     * &lt;br/&gt;
+&nbsp;     * dall-e-3可以使用hd
+&nbsp;     */
+&nbsp;    private String quality;
+&nbsp;    /**
+&nbsp;     * The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3
+&nbsp;     */
+&nbsp;    private String size;
+&nbsp;    private String response_format;
+&nbsp;    /**
+&nbsp;     * Optional
+&nbsp;     * Defaults to vivid
+&nbsp;     * &lt;br/&gt;
+&nbsp;     * The style of the generated images. Must be one of vivid or natural. Vivid causes the model to lean towards generating hyper-real and dramatic images. Natural causes the model to produce more natural, less hyper-real looking images. This param is only supported for dall-e-3.
+&nbsp;     */
+&nbsp;    private String style;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    @Getter</b>
+&nbsp;    @AllArgsConstructor
+&nbsp;    public enum Model {
+<b class="nc">&nbsp;        DALL_E_2(&quot;dall-e-2&quot;),</b>
+<b class="nc">&nbsp;        DALL_E_3(&quot;dall-e-3&quot;),</b>
+&nbsp;        ;
+&nbsp;        private String name;
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Generations ofURL(String prompt, int n, String size) {
+<b class="nc">&nbsp;        return Generations.builder()</b>
+<b class="nc">&nbsp;                .prompt(prompt)</b>
+<b class="nc">&nbsp;                .n(n)</b>
+<b class="nc">&nbsp;                .size(size)</b>
+<b class="nc">&nbsp;                .response_format(ResponseFormat.URL.getValue())</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Generations ofB64_JSON(String prompt, int n, String size) {
+<b class="nc">&nbsp;        return Generations.builder()</b>
+<b class="nc">&nbsp;                .prompt(prompt)</b>
+<b class="nc">&nbsp;                .n(n)</b>
+<b class="nc">&nbsp;                .size(size)</b>
+<b class="nc">&nbsp;                .response_format(ResponseFormat.B64_JSON.getValue())</b>
+<b class="nc">&nbsp;                .build();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 16:39</div>
+</div>
+</body>
+</html>

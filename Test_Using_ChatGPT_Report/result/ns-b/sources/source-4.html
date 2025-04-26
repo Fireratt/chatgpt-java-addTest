@@ -1,0 +1,625 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > TypeUtils</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.plexpt.chatgpt.util.fastjson</a>
+</div>
+
+<h1>Coverage Summary for Class: TypeUtils (com.plexpt.chatgpt.util.fastjson)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TypeUtils</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/260)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.plexpt.chatgpt.util.fastjson;
+&nbsp;
+&nbsp;
+&nbsp;import com.plexpt.chatgpt.util.fastjson.exception.ParseException;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.math.BigInteger;
+&nbsp;import java.util.Iterator;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.regex.Matcher;
+&nbsp;import java.util.regex.Pattern;
+&nbsp;
+<b class="nc">&nbsp;public class TypeUtils {</b>
+<b class="nc">&nbsp;    private static final Pattern NUMBER_WITH_TRAILING_ZEROS_PATTERN = Pattern.compile(&quot;\\.0*$&quot;);</b>
+&nbsp;
+&nbsp;
+&nbsp;    public static String castToString(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return value.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Byte castToByte(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            return byteValue((BigDecimal) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Number) {</b>
+<b class="nc">&nbsp;            return ((Number) value).byteValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = (String) value;</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0 //</b>
+<b class="nc">&nbsp;                    || &quot;null&quot;.equals(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;NULL&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return Byte.parseByte(strVal);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Boolean) {</b>
+<b class="nc">&nbsp;            return ((Boolean) value).booleanValue() ? (byte) 1 : (byte) 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to byte, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Character castToChar(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof Character) {</b>
+<b class="nc">&nbsp;            return (Character) value;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = (String) value;</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (strVal.length() != 1) {</b>
+<b class="nc">&nbsp;                throw new ParseException(&quot;can not cast to char, value : &quot; + value);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return strVal.charAt(0);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to char, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Short castToShort(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            return shortValue((BigDecimal) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Number) {</b>
+<b class="nc">&nbsp;            return ((Number) value).shortValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = (String) value;</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0 //</b>
+<b class="nc">&nbsp;                    || &quot;null&quot;.equals(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;NULL&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return Short.parseShort(strVal);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Boolean) {</b>
+<b class="nc">&nbsp;            return ((Boolean) value).booleanValue() ? (short) 1 : (short) 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to short, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static BigDecimal castToBigDecimal(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Float) {</b>
+<b class="nc">&nbsp;            if (Float.isNaN((Float) value) || Float.isInfinite((Float) value)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } else if (value instanceof Double) {</b>
+<b class="nc">&nbsp;            if (Double.isNaN((Double) value) || Double.isInfinite((Double) value)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } else if (value instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            return (BigDecimal) value;</b>
+<b class="nc">&nbsp;        } else if (value instanceof BigInteger) {</b>
+<b class="nc">&nbsp;            return new BigDecimal((BigInteger) value);</b>
+<b class="nc">&nbsp;        } else if (value instanceof Map &amp;&amp; ((Map) value).size() == 0) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        String strVal = value.toString();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (strVal.length() == 0</b>
+<b class="nc">&nbsp;                || strVal.equalsIgnoreCase(&quot;null&quot;)) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (strVal.length() &gt; 65535) {</b>
+<b class="nc">&nbsp;            throw new ParseException(&quot;decimal overflow&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return new BigDecimal(strVal);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static BigInteger castToBigInteger(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Float) {</b>
+<b class="nc">&nbsp;            Float floatValue = (Float) value;</b>
+<b class="nc">&nbsp;            if (Float.isNaN(floatValue) || Float.isInfinite(floatValue)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return BigInteger.valueOf(floatValue.longValue());</b>
+<b class="nc">&nbsp;        } else if (value instanceof Double) {</b>
+<b class="nc">&nbsp;            Double doubleValue = (Double) value;</b>
+<b class="nc">&nbsp;            if (Double.isNaN(doubleValue) || Double.isInfinite(doubleValue)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return BigInteger.valueOf(doubleValue.longValue());</b>
+<b class="nc">&nbsp;        } else if (value instanceof BigInteger) {</b>
+<b class="nc">&nbsp;            return (BigInteger) value;</b>
+<b class="nc">&nbsp;        } else if (value instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            BigDecimal decimal = (BigDecimal) value;</b>
+<b class="nc">&nbsp;            int scale = decimal.scale();</b>
+<b class="nc">&nbsp;            if (scale &gt; -1000 &amp;&amp; scale &lt; 1000) {</b>
+<b class="nc">&nbsp;                return ((BigDecimal) value).toBigInteger();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        String strVal = value.toString();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (strVal.length() == 0</b>
+<b class="nc">&nbsp;                || strVal.equalsIgnoreCase(&quot;null&quot;)) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (strVal.length() &gt; 65535) {</b>
+<b class="nc">&nbsp;            throw new ParseException(&quot;decimal overflow&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return new BigInteger(strVal);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Float castToFloat(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof Number) {</b>
+<b class="nc">&nbsp;            return ((Number) value).floatValue();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = value.toString();</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0 //</b>
+<b class="nc">&nbsp;                    || &quot;null&quot;.equals(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;NULL&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (strVal.indexOf(&#39;,&#39;) != -1) {</b>
+<b class="nc">&nbsp;                strVal = strVal.replaceAll(&quot;,&quot;, &quot;&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return Float.parseFloat(strVal);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Boolean) {</b>
+<b class="nc">&nbsp;            return ((Boolean) value).booleanValue() ? 1F : 0F;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to float, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Double castToDouble(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof Number) {</b>
+<b class="nc">&nbsp;            return ((Number) value).doubleValue();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = value.toString();</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0 //</b>
+<b class="nc">&nbsp;                    || &quot;null&quot;.equals(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;NULL&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (strVal.indexOf(&#39;,&#39;) != -1) {</b>
+<b class="nc">&nbsp;                strVal = strVal.replaceAll(&quot;,&quot;, &quot;&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return Double.parseDouble(strVal);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Boolean) {</b>
+<b class="nc">&nbsp;            return ((Boolean) value).booleanValue() ? 1D : 0D;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to double, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public static long longExtractValue(Number number) {
+<b class="nc">&nbsp;        if (number instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            return ((BigDecimal) number).longValueExact();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return number.longValue();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    static int num(char c0, char c1) {
+<b class="nc">&nbsp;        if (c0 &gt;= &#39;0&#39;</b>
+&nbsp;                &amp;&amp; c0 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c1 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c1 &lt;= &#39;9&#39;
+&nbsp;        ) {
+<b class="nc">&nbsp;            return (c0 - &#39;0&#39;) * 10</b>
+&nbsp;                    + (c1 - &#39;0&#39;);
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return -1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    static int num(char c0, char c1, char c2, char c3) {
+<b class="nc">&nbsp;        if (c0 &gt;= &#39;0&#39;</b>
+&nbsp;                &amp;&amp; c0 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c1 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c1 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c2 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c2 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c3 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c3 &lt;= &#39;9&#39;
+&nbsp;        ) {
+<b class="nc">&nbsp;            return (c0 - &#39;0&#39;) * 1000</b>
+&nbsp;                    + (c1 - &#39;0&#39;) * 100
+&nbsp;                    + (c2 - &#39;0&#39;) * 10
+&nbsp;                    + (c3 - &#39;0&#39;);
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return -1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    static int num(char c0, char c1, char c2, char c3, char c4, char c5, char c6, char c7, char c8) {
+<b class="nc">&nbsp;        if (c0 &gt;= &#39;0&#39;</b>
+&nbsp;                &amp;&amp; c0 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c1 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c1 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c2 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c2 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c3 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c3 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c4 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c4 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c5 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c5 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c6 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c6 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c7 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c7 &lt;= &#39;9&#39;
+&nbsp;                &amp;&amp; c8 &gt;= &#39;0&#39;
+&nbsp;                &amp;&amp; c8 &lt;= &#39;9&#39;
+&nbsp;        ) {
+<b class="nc">&nbsp;            return (c0 - &#39;0&#39;) * 100000000</b>
+&nbsp;                    + (c1 - &#39;0&#39;) * 10000000
+&nbsp;                    + (c2 - &#39;0&#39;) * 1000000
+&nbsp;                    + (c3 - &#39;0&#39;) * 100000
+&nbsp;                    + (c4 - &#39;0&#39;) * 10000
+&nbsp;                    + (c5 - &#39;0&#39;) * 1000
+&nbsp;                    + (c6 - &#39;0&#39;) * 100
+&nbsp;                    + (c7 - &#39;0&#39;) * 10
+&nbsp;                    + (c8 - &#39;0&#39;);
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return -1;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static boolean isNumber(String str) {
+<b class="nc">&nbsp;        for (int i = 0; i &lt; str.length(); ++i) {</b>
+<b class="nc">&nbsp;            char ch = str.charAt(i);</b>
+<b class="nc">&nbsp;            if (ch == &#39;+&#39; || ch == &#39;-&#39;) {</b>
+<b class="nc">&nbsp;                if (i != 0) {</b>
+<b class="nc">&nbsp;                    return false;</b>
+&nbsp;                }
+<b class="nc">&nbsp;            } else if (ch &lt; &#39;0&#39; || ch &gt; &#39;9&#39;) {</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Long castToLong(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            return longValue((BigDecimal) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Number) {</b>
+<b class="nc">&nbsp;            return ((Number) value).longValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = (String) value;</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0 //</b>
+<b class="nc">&nbsp;                    || &quot;null&quot;.equals(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;NULL&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (strVal.indexOf(&#39;,&#39;) != -1) {</b>
+<b class="nc">&nbsp;                strVal = strVal.replaceAll(&quot;,&quot;, &quot;&quot;);</b>
+&nbsp;            }
+&nbsp;            try {
+<b class="nc">&nbsp;                return Long.parseLong(strVal);</b>
+<b class="nc">&nbsp;            } catch (NumberFormatException ex) {</b>
+<b class="nc">&nbsp;                throw ex;</b>
+&nbsp;            }
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Map) {</b>
+<b class="nc">&nbsp;            Map map = (Map) value;</b>
+<b class="nc">&nbsp;            if (map.size() == 2</b>
+<b class="nc">&nbsp;                    &amp;&amp; map.containsKey(&quot;andIncrement&quot;)</b>
+<b class="nc">&nbsp;                    &amp;&amp; map.containsKey(&quot;andDecrement&quot;)) {</b>
+<b class="nc">&nbsp;                Iterator iter = map.values().iterator();</b>
+<b class="nc">&nbsp;                iter.next();</b>
+<b class="nc">&nbsp;                Object value2 = iter.next();</b>
+<b class="nc">&nbsp;                return castToLong(value2);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Boolean) {</b>
+<b class="nc">&nbsp;            return ((Boolean) value).booleanValue() ? 1L : 0L;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to long, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static byte byteValue(BigDecimal decimal) {
+<b class="nc">&nbsp;        if (decimal == null) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int scale = decimal.scale();</b>
+<b class="nc">&nbsp;        if (scale &gt;= -100 &amp;&amp; scale &lt;= 100) {</b>
+<b class="nc">&nbsp;            return decimal.byteValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return decimal.byteValueExact();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static short shortValue(BigDecimal decimal) {
+<b class="nc">&nbsp;        if (decimal == null) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int scale = decimal.scale();</b>
+<b class="nc">&nbsp;        if (scale &gt;= -100 &amp;&amp; scale &lt;= 100) {</b>
+<b class="nc">&nbsp;            return decimal.shortValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return decimal.shortValueExact();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static int intValue(BigDecimal decimal) {
+<b class="nc">&nbsp;        if (decimal == null) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int scale = decimal.scale();</b>
+<b class="nc">&nbsp;        if (scale &gt;= -100 &amp;&amp; scale &lt;= 100) {</b>
+<b class="nc">&nbsp;            return decimal.intValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return decimal.intValueExact();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static long longValue(BigDecimal decimal) {
+<b class="nc">&nbsp;        if (decimal == null) {</b>
+<b class="nc">&nbsp;            return 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int scale = decimal.scale();</b>
+<b class="nc">&nbsp;        if (scale &gt;= -100 &amp;&amp; scale &lt;= 100) {</b>
+<b class="nc">&nbsp;            return decimal.longValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return decimal.longValueExact();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static Integer castToInt(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Integer) {</b>
+<b class="nc">&nbsp;            return (Integer) value;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            return intValue((BigDecimal) value);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Number) {</b>
+<b class="nc">&nbsp;            return ((Number) value).intValue();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = (String) value;</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0 //</b>
+<b class="nc">&nbsp;                    || &quot;null&quot;.equals(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;NULL&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (strVal.indexOf(&#39;,&#39;) != -1) {</b>
+<b class="nc">&nbsp;                strVal = strVal.replaceAll(&quot;,&quot;, &quot;&quot;);</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            Matcher matcher = NUMBER_WITH_TRAILING_ZEROS_PATTERN.matcher(strVal);</b>
+<b class="nc">&nbsp;            if (matcher.find()) {</b>
+<b class="nc">&nbsp;                strVal = matcher.replaceAll(&quot;&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            return Integer.parseInt(strVal);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Boolean) {</b>
+<b class="nc">&nbsp;            return (Boolean) value ? 1 : 0;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof Map) {</b>
+<b class="nc">&nbsp;            Map map = (Map) value;</b>
+<b class="nc">&nbsp;            if (map.size() == 2</b>
+<b class="nc">&nbsp;                    &amp;&amp; map.containsKey(&quot;andIncrement&quot;)</b>
+<b class="nc">&nbsp;                    &amp;&amp; map.containsKey(&quot;andDecrement&quot;)) {</b>
+<b class="nc">&nbsp;                Iterator iter = map.values().iterator();</b>
+<b class="nc">&nbsp;                iter.next();</b>
+<b class="nc">&nbsp;                Object value2 = iter.next();</b>
+<b class="nc">&nbsp;                return castToInt(value2);</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to int, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public static Boolean castToBoolean(Object value) {
+<b class="nc">&nbsp;        if (value == null) {</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (value instanceof Boolean) {</b>
+<b class="nc">&nbsp;            return (Boolean) value;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof BigDecimal) {</b>
+<b class="nc">&nbsp;            return intValue((BigDecimal) value) == 1;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof Number) {</b>
+<b class="nc">&nbsp;            return ((Number) value).intValue() == 1;</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (value instanceof String) {</b>
+<b class="nc">&nbsp;            String strVal = (String) value;</b>
+<b class="nc">&nbsp;            if (strVal.length() == 0 //</b>
+<b class="nc">&nbsp;                    || &quot;null&quot;.equals(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;NULL&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return null;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (&quot;true&quot;.equalsIgnoreCase(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;1&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return Boolean.TRUE;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (&quot;false&quot;.equalsIgnoreCase(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;0&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return Boolean.FALSE;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (&quot;Y&quot;.equalsIgnoreCase(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;T&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return Boolean.TRUE;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (&quot;F&quot;.equalsIgnoreCase(strVal) //</b>
+<b class="nc">&nbsp;                    || &quot;N&quot;.equals(strVal)) {</b>
+<b class="nc">&nbsp;                return Boolean.FALSE;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        throw new ParseException(&quot;can not cast to boolean, value : &quot; + value);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-04-26 16:39</div>
+</div>
+</body>
+</html>
